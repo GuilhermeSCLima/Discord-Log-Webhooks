@@ -1,7 +1,7 @@
 fx_version "bodacious"
 game "gta5"
 lua54 "yes"
-version "2.0.6"
+version "1.0.1"
 author "Guilherme Lima"
 
 client_scripts {
