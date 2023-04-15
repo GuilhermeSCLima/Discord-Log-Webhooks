@@ -1,0 +1,82 @@
+{
+	"color_webhook": {
+		"scope": "lua",
+		"prefix": "cwb",
+		"body": "[\"$1\"] = $2,\n$0",
+		"description": "Create a new color"
+	},
+	"webhook": {
+		"scope": "lua",
+		"prefix": "wb",
+		"body": "[\"$1\"] = \"$2\",$0",
+		"description": "Create a new color"
+	},
+	"webhookC": {
+		"scope": "lua",
+		"prefix": "wbc",
+		"description": "Create a template for webhook client-side",
+		"body": [
+			"TriggerServerEvent(\"sendWebhooks\",\"$1\",{",
+			"\tcontent = ${2:nil},",
+			"\tembeds = {",
+			"\t\t$0",
+			"\t}",
+			"})"
+		]
+	},
+	"webhookS": {
+		"scope": "lua",
+		"prefix": "wbs",
+		"description": "Create a template for webhook server-side",
+		"body": [
+			"TriggerEvent(\"sendWebhooks\",\"$1\",{",
+			"\tcontent = ${2:nil},",
+			"\tembeds = {",
+			"\t\t$0",
+			"\t}",
+			"})"
+		]
+	},
+	"embed": {
+		"scope": "lua",
+		"prefix": "embed",
+		"description": "Create a template for embed",
+		"body": [
+			"{",
+			"\ttitle = ${1:nil},",
+			"\tdescription = ${2:nil},",
+			"\turl = ${3:nil},",
+			"\ttimestamp = os.date(\"!%Y%m%dT%H%M%S\"),",
+			"\tcolor = exports[\"webhooks\"]:color(\"$4\"),",
+			"\tfooter = {",
+			"\t\ttext = ${5:\"${6:Tio Sam Roleplay} ©️ \"..os.date(\"*t\")[\"year\"]},",
+			"\t\ticon_url = ${7:\"https://media.discordapp.net/attachments/1027717238372974662/1062146553927708923/server.png\"}",
+			"\t},",
+			"\timage = {",
+			"\t\turl = ${8:nil}",
+			"\t},",
+			"\tthumbnail = {",
+			"\t\turl = ${9:nil}",
+			"\t},",
+			"\tfields = ${10|nil,{}|},",
+			"\tauthor = {",
+			"\t\tname = ${11:nil},",
+			"\t\turl = ${12:nil},",
+			"\t\ticon_url = ${13:nil}",
+			"\t},",
+			"}"
+		]
+	},
+	"embed_field": {
+		"scope": "lua",
+		"prefix": "embed_field",
+		"description": "Create a template for embed field",
+		"body": [
+			"{",
+			"\tname = \"$1\",",
+			"\tvalue = \"$2\",",
+			"\tinline = ${3|true,false|}",
+			"},"
+		]
+	}
+}
