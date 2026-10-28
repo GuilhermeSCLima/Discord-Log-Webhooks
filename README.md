@@ -1,90 +1,138 @@
-![GitHub forks](https://img.shields.io/github/forks/Guilhermesclima/Discord-Log-Webhooks?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/GuilhermeSCLima/Discord-Log-Webhooks?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/GuilhermeSCLima/Discord-Log-Webhooks?logo=github&style=for-the-badge)
 ![GitHub repo size](https://img.shields.io/github/repo-size/GuilhermeSCLima/Discord-Log-Webhooks?logo=github&style=for-the-badge)
 ![GitHub all releases](https://img.shields.io/github/downloads/GuilhermeSCLima/Discord-Log-Webhooks/total?logo=github&style=for-the-badge)
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
+![Lua](https://img.shields.io/badge/Lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 # Discord Log Webhooks
-Discord log webhook system is a standalone FiveM script writen in LUA that allows server owners to create complete webhooks logs for their servers
 
-## Instalation
-1. Download the zip file from the last release from the repository.
-2. Unzip the file and place it in the resources folder of your FiveM server.
-3. Add the following code to your server.cfg file: `ensure webhooks`.
+**Discord Log Webhooks** is a standalone FiveM script written in Lua that allows server owners to create complete, standardized and centralized webhook logs for their servers.
+
+Instead of manually configuring multiple Discord webhooks across different resources, you can use a single, reusable logging system to send structured messages and embeds to Discord.
+
+## Features
+
+- Centralized webhook configuration
+- Support for multiple named webhooks
+- Custom colors and server identity
+- Discord embed support
+- Reusable function for server-side and client-side events
+- VS Code snippets for faster development
+- Lightweight and easy to integrate
+
+## Installation
+
+1. Download the latest release from the [Releases](https://github.com/GuilhermeSCLima/Discord-Log-Webhooks/releases) page.
+2. Extract the folder into your FiveM server's `resources` directory.
+3. Add the following line to your `server.cfg`:
+
+```cfg
+ensure webhooks
+```
 
 ## Configuration
-1. Go to `config/core.lua` file.
-2. On Webhooks list you may set `["WebhookName"] = "Webhook_link"`.
-3. On Colors list you may set `["ColorName"] = DecimalColorNumber`.
-4. On serverName variable you may set the name of your FiveM Server, or the name your webhook may appear when send a webhook.
-5. On serverName variable you may set the icon image link of your FiveM Server, or the icon your webhook may appear when send a webhook.
 
-## Usage | Example
-For server-side scripts use `TriggerEvent`
-For client-side scripts use `TriggerServerEvent`
+Open `config/core.lua` and configure the following:
+
+### Webhooks
+
+Define your Discord webhooks using a descriptive name:
+
 ```lua
-TriggerEvent("sendWebhooks","preConfiguredName",{
-  content = "Discord message content",
-  embeds = {
-    {
-      title = nil,
-      description = nil,
-      url = nil,
-      timestamp = os.date("!%Y%m%dT%H%M%S"), --ISO8601 timestamp
-      color = exports["webhooks"]:color(""),
-      footer = {
-        text = "FiveM server name ©️ "..os.date("*t")["year"],
-        icon_url = nil
-      },
-      image = {
-        url = nil
-      },
-      thumbnail = {
-        url = nil
-      },
-      fields = nil,
-      author = {
-        name = nil,
-        url = nil,
-        icon_url = nil
-      },
+Webhooks = {
+    ["logs"] = "[https://discord.com/api/webhooks/your-webhook-url](https://discord.com/api/webhooks/your-webhook-url)",
+    ["payments"] = "[https://discord.com/api/webhooks/your-webhook-url](https://discord.com/api/webhooks/your-webhook-url)"
+}
+```
+
+### Colors
+
+Define custom colors using decimal color values:
+
+```lua
+Colors = {
+    ["red"] = 15548997,
+    ["green"] = 5763719,
+    ["blue"] = 3447003
+}
+```
+
+### Server identity
+
+Set the name and icon that will appear in the webhook messages:
+
+```lua
+serverName = "Your FiveM Server"
+serverIcon = "[https://your-server-icon-url.png](https://your-server-icon-url.png)"
+```
+
+## Usage
+
+Use `TriggerEvent` in server-side scripts:
+
+```lua
+TriggerEvent("sendWebhooks", "logs", {
+    content = "Discord message content",
+    embeds = {
+        {
+            title = "Player connected",
+            description = "A new player has joined the server.",
+            color = exports["webhooks"]:color("green"),
+            footer = {
+                text = "FiveM Server © " .. os.date("*t")["year"]
+            }
+        }
     }
-  }
 })
 ```
 
-## Useful
-In case you see useful, you can add the snippets for this script, to your vscode snippets by following theis steps:
-[Create your own snippets (VSCode)](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_create-your-own-snippets)
-- the snippets for vscode are storage in `snippets/vscode.json`
+Use `TriggerServerEvent` in client-side scripts:
+
+```lua
+TriggerServerEvent("sendWebhooks", "logs", {
+    content = "Discord message content"
+})
+```
+
+## VS Code Snippets
+
+Optional VS Code snippets are available in `snippets/vscode.json`.
+
+To use them:
+
+1. Open VS Code.
+2. Go to **File > Preferences > Configure User Snippets**.
+3. Create or open a Lua snippets file.
+4. Copy the contents of `snippets/vscode.json`.
+
+For more details, see the official VS Code documentation:  
+[Create your own snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets)
 
 ## Contributing
-If you have a suggestion that would make this better, please fork the repo and create a pull request. Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
-2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
-3. Commit your Changes (git commit -m 'Add some AmazingFeature')
-4. Push to the Branch (git push origin feature/AmazingFeature)
+Contributions are welcome.
+
+1. Fork the project
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m "Add AmazingFeature"`
+4. Push to the branch: `git push origin feature/AmazingFeature`
 5. Open a Pull Request
 
-## Programing Languages and Tools
-![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
-![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
-
 ## License
-Distributed under the MIT License. See LICENSE.txt for more information.
 
-## Reference
- - [Convert Hexadecimal to Decimal - Color Conversions](https://www.checkyourmath.com/convert/color/hexadecimal_decimal.php)
- - [Discord Embed documentation](https://discord.com/developers/docs/resources/channel#embed-object)
- - [Guilherme Lima](https://github.com/GuilhermeSCLima)
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Authors
+## Author
 
-- [@Guilherme Lima](https://github.com/GuilhermeSCLima)
+- **João Guilherme Lima** — [GitHub](https://github.com/GuilhermeSCLima)
 
 ## Contact
 
-Guilherme Lima - Guilherme Lima#1152 - contato@guilhermelima.dev
+- Email: [contato@guilhermelima.dev](mailto:contato@guilhermelima.dev)
+- Project: [Discord Log Webhooks](https://github.com/GuilhermeSCLima/Discord-Log-Webhooks)
 
-Project Link: https://github.com/GuilhermeSCLima/Discord-Log-Webhooks
+## References
+
+- [Discord Embed documentation](https://discord.com/developers/docs/resources/channel#embed-object)
+- [Hexadecimal to decimal color conversion](https://www.checkyourmath.com/convert/color/hexadecimal_decimal.php)
